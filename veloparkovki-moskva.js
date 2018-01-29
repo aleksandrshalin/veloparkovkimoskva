@@ -1,23 +1,17 @@
 ymaps.ready(init);
 
-/**
- * Форматируем данные с data.mos.ru в формат yandex map
- *
- * @param mosData
- * @returns {Array}
- */
 function fromMosToYaMapsCollection(mosData) {
     var featuresCollection = [];
 
     for (var key in mosData['features']) {
         var mosItem = mosData['features'][key];
 
-        mosItem.geometry.coordinates.reverse(); // Переворачиваем координаты под формат яндекс карт
+        mosItem.geometry.coordinates.reverse();
 
         featuresCollection.push({
-            id: mosItem.properties.Attributes.global_id, //Уникальный айди точки
+            id: mosItem.properties.Attributes.global_id,
             type: 'Feature',
-            geometry: mosItem.geometry, //Преобразованные координаты
+            geometry: mosItem.geometry,
             properties: {
                 hintContent: mosItem.properties.Attributes.Address,
                 balloonContent: mosItem.properties.Attributes.Name
@@ -32,9 +26,7 @@ function fromMosToYaMapsCollection(mosData) {
 function init() {
 
     var objectManager = new ymaps.ObjectManager({
-        // Чтобы метки начали кластеризоваться, выставляем опцию.
         clusterize: true,
-        // ObjectManager принимает те же опции, что и кластеризатор.
         gridSize: 32,
         clusterDisableClickZoom: true
     });
